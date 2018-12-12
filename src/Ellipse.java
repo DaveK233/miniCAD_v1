@@ -1,9 +1,9 @@
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class Eliipse extends Items {
+public class Ellipse extends Items {
 
-    public Eliipse(Graphics2D g2d, Color icolor, float width, double x1, double y1, double x2, double y2) {
+    public Ellipse(Graphics2D g2d, Color icolor, float width, double x1, double y1, double x2, double y2) {
         super(g2d, icolor, width, x1, y1, x2, y2);
     }
 
