@@ -6,9 +6,9 @@ import java.awt.geom.Rectangle2D;
 public class Line extends Items {
 
     private Line2D line;
-    public Line(Graphics2D g2d, Color icolor, float width, double x1, double y1, double x2, double y2) {
-        super(g2d, icolor, width, x1, y1, x2, y2);
-        line = new Line2D.Double(x1, y1, x2, y2);   // set params
+    public Line(Graphics2D g2d, Color icolor, float width, double x1, double y1, double boundw, double boundh) {
+        super(g2d, icolor, width, x1, y1, boundw, boundh);
+        line = new Line2D.Double(x1, y1, boundw, boundh);   // set params
         bound = line.getBounds2D(); // get bounding box
     }
 

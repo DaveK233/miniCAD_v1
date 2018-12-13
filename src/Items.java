@@ -32,7 +32,7 @@ public abstract class Items {
 
     public Stroke dash = new BasicStroke(1.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_ROUND,3.5f,new float[]{15,10,},0f);
 
-    public Items(Graphics2D g2d, Color icolor, float width, double x1, double y1, double x2, double y2)
+    public Items(Graphics2D g2d, Color icolor, float width, double x1, double y1, double boundw, double boundh)
     {
         graphics = g2d;
         color = icolor;
@@ -110,7 +110,7 @@ public abstract class Items {
     }
 
     // set params to draw
-    public void Draw(Graphics2D g2d) {
+    public void Draw(Graphics g2d) {
         Graphics2D temp = graphics;
         graphics = (Graphics2D)g2d;
         graphics.setColor(color);
