@@ -44,9 +44,9 @@ public class Line extends Items {
     public void Move(Point2D point) {
         double deltaY = point.getY() - bound.getCenterY();  // calculate delta X
         double deltaX = point.getX() - bound.getCenterX();  // calculate delta Y
-        Point2D newp1 = new Point2D.Double(line.getX1() + deltaX, line.getY1() + deltaY);
-        Point2D newp2 = new Point2D.Double(line.getX2() + deltaX, line.getY2() + deltaY);
-        line.setLine(newp1, newp2); // draw new line
+        Point2D newP1 = new Point2D.Double(line.getX1() + deltaX, line.getY1() + deltaY);
+        Point2D newP2 = new Point2D.Double(line.getX2() + deltaX, line.getY2() + deltaY);
+        line.setLine(newP1, newP2); // draw new line
         bound = line.getBounds2D();
     }
 

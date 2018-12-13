@@ -27,9 +27,9 @@ public class Rectangle extends Items {
         double deltaY = point.getY() - bound.getCenterY();
         double newX = rectangle.getX() + deltaX;
         double newY = rectangle.getY() + deltaY;
-        double nwidth = rectangle.getWidth();
-        double nheight = rectangle.getHeight();
-        rectangle.setFrame(newX, newY, nwidth, nheight);
+        double newWidth = rectangle.getWidth();
+        double newHeight = rectangle.getHeight();
+        rectangle.setFrame(newX, newY, newWidth, newHeight);
         bound = rectangle.getBounds2D();
     }
 
