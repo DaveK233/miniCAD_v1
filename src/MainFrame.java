@@ -19,7 +19,46 @@ public class MainFrame extends JFrame {
 }
 
 class mMenu extends JMenuBar {
+    private JMenu file, item, help;
+    private JMenuItem openFrom, saveAs; // file menu options
+    private JMenuItem drawLine, drawRec, drawEli, addText, zoomItem, moveItem;
+    private mActionListener mListener;
+    public mMenu(mActionListener listener) {
+        mListener = listener;
+        file = new JMenu("File");
+        item = new JMenu("Item");
+        help = new JMenu("Help");
 
+        openFrom = new JMenuItem("Open From...");
+        openFrom.setActionCommand("OPEN");
+        openFrom.addActionListener(mListener);
+        file.add(openFrom);
+
+        saveAs = new JMenuItem("Save As...");
+        saveAs.setActionCommand("SAVE");
+        saveAs.addActionListener(mListener);
+        file.add(saveAs);
+
+        drawLine = new JMenuItem("Draw Line");
+        drawLine.setActionCommand("LINE");
+        drawLine.addActionListener(mListener);
+        item.add(openFrom);
+
+        drawRec = new JMenuItem("Draw Rectangle");
+        drawRec.setActionCommand("RECTANGLE");
+        drawRec.addActionListener(mListener);
+        item.add(drawRec);
+
+        drawEli = new JMenuItem("Draw Ellipse");
+        drawEli.setActionCommand("ELLIPSE");
+        drawEli.addActionListener(mListener);
+        item.add(drawEli);
+
+        drawEli = new JMenuItem("Draw Ellipse");
+        drawEli.setActionCommand("ELLIPSE");
+        drawEli.addActionListener(mListener);
+        item.add(drawEli);
+    }
 }
 
 class mToolbar extends JToolBar {
