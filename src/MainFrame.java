@@ -15,13 +15,23 @@ public class MainFrame extends JFrame {
         mControl = controller;
         mListener = listener;
         canvas = new mCanvas(mListener, mControl);
+        menu = new mMenu(mListener);
+        toolbar = new mToolbar(mListener);
+        this.setTitle("MiniCAD");
+        Dimension frameSize = new Dimension(600, 600);
+        this.setMinimumSize(frameSize);
+        int windowHeight = (int) (screen.getHeight() / 2);
+        int windowWidth = (int) (screen.getWidth() / 2);
+        this.setSize(windowWidth, windowHeight);
+
     }
 }
 
 class mMenu extends JMenuBar {
     private JMenu file, item, help;
     private JMenuItem openFrom, saveAs; // file menu options
-    private JMenuItem drawLine, drawRec, drawEli, addText, zoomItem, moveItem;
+    private JMenuItem drawLine, drawRec, drawEli, addText, zoomItem, moveItem, color;   // Item menu options
+    private JMenuItem about, itemHelp;  // Help menu options
     private mActionListener mListener;
     public mMenu(mActionListener listener) {
         mListener = listener;
@@ -54,10 +64,41 @@ class mMenu extends JMenuBar {
         drawEli.addActionListener(mListener);
         item.add(drawEli);
 
-        drawEli = new JMenuItem("Draw Ellipse");
-        drawEli.setActionCommand("ELLIPSE");
-        drawEli.addActionListener(mListener);
-        item.add(drawEli);
+        addText = new JMenuItem("Add Text");
+        addText.setActionCommand("TEXT");
+        addText.addActionListener(mListener);
+        item.add(addText);
+
+        zoomItem = new JMenuItem("Zoom in/out");
+        zoomItem.setActionCommand("ZOOM");
+        zoomItem.addActionListener(mListener);
+        item.add(zoomItem);
+
+        moveItem = new JMenuItem("Move Item");
+        moveItem.setActionCommand("MOVE");
+        moveItem.addActionListener(mListener);
+        item.add(moveItem);
+
+        color = new JMenuItem("Set Color");
+        color.setActionCommand("COLOR");
+        color.addActionListener(mListener);
+        item.add(color);
+
+        about = new JMenuItem("About");
+        about.setActionCommand("ABOUT");
+        about.addActionListener(mListener);
+        help.add(about);
+
+        itemHelp = new JMenuItem("Help");
+        itemHelp.setActionCommand("HELP");
+        itemHelp.addActionListener(mListener);
+        help.add(itemHelp);
+
+        this.add(file);
+        this.add(item);
+        this.add(help);
+        Dimension menuSize = new Dimension(600,40);
+        this.setPreferredSize(menuSize);
     }
 }
 
