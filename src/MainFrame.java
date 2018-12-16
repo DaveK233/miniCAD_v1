@@ -23,7 +23,27 @@ public class MainFrame extends JFrame {
         int windowHeight = (int) (screen.getHeight() / 2);
         int windowWidth = (int) (screen.getWidth() / 2);
         this.setSize(windowWidth, windowHeight);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addKeyListener(listener);
+        this.setJMenuBar(menu);
+        this.setLayout(new BorderLayout(5, 5));
+        this.add(toolbar, BorderLayout.PAGE_START);
+        this.add(canvas, BorderLayout.CENTER);
+        this.setFocusable(true);
+        this.setVisible(true);
+    }
 
+    public void frameFocus() {
+        canvas.requestFocus();
+    }
+
+    public Graphics2D get2Dframe() {
+        return (Graphics2D)canvas.getGraphics();
+    }
+
+    public void frameRefresh() {
+        canvas.repaint();
     }
 }
 
