@@ -1,10 +1,30 @@
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
     private mActionListener mListener;
     private ControlPanel mControl;
     private mCanvas canvas;
+    private mToolbar toolbar;
+    private mMenu menu;
+
+    public MainFrame(mActionListener listener, ControlPanel controller) {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screen = toolkit.getScreenSize();
+        mControl = controller;
+        mListener = listener;
+        canvas = new mCanvas(mListener, mControl);
+
+    }
+}
+
+class mMenu extends JMenuBar {
+
+}
+
+class mToolbar extends JToolBar {
+
 }
 
 class mCanvas extends JPanel {
