@@ -55,6 +55,6 @@ public class Text extends Items{
 
     @Override
     public String ReadItem() {
-        return "TEXT, " + color.getRGB() + ", " + stroke + ", " + (int)bound.getX() + ", " + (int)bound.getY() + ", " + (int)bound.getWidth() + ", " + (int)bound.getHeight() + "\n";
+        return "TEXT," + color.getRGB() + "," + stroke + "," + text + "," + (int)bound.getX() + "," + (int)bound.getY() + "," + (int)bound.getWidth() + "," + (int)bound.getHeight() + "\n";
     }
 }

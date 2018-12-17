@@ -48,6 +48,6 @@ public class Ellipse extends Items {
 
     @Override
     public String ReadItem() {
-        return "ELLIPSE, " + color.getRGB() + ", " + stroke + ", " + (int)ellipse.getX() + ", " + (int)ellipse.getY() + ", " + (int)ellipse.getWidth() + ", " + (int)ellipse.getHeight() + "\n";
+        return "ELLIPSE," + color.getRGB() + "," + stroke + "," + (int)ellipse.getX() + "," + (int)ellipse.getY() + "," + (int)ellipse.getWidth() + "," + (int)ellipse.getHeight() + "\n";
     }
 }

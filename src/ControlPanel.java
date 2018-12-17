@@ -1,5 +1,8 @@
+import javax.management.monitor.StringMonitor;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.io.*;
 import java.util.LinkedList;
 
 class ControlPanel {
@@ -90,71 +93,56 @@ class ControlPanel {
             it.Draw(g);
         }
     }
-}
 
-//    public boolean loadItems() throws IOException
-//    {
-//        FileDialog openDia = new FileDialog(mainFrame, "Open", FileDialog.LOAD);
-//        openDia.setVisible(true);
-//        String dirPath = openDia.getDirectory();
-//        String fileName = openDia.getFile();
-//        System.out.println(dirPath + fileName);
-//        if (dirPath == null || fileName == null)//判断路径和文件是否为空
-//            return false;
-//        else
-//        {
-//            itemList.clear();
-//            String str = null;
-//            File file = new File(dirPath + fileName);
-//            BufferedReader bReader = new BufferedReader(new FileReader(file));
-//            while((str = bReader.readLine()) != null)
-//            {
-//                System.out.println(str);
-//                String [] arr = str.split(",");
-//                t_color = new Color(Integer.parseInt(arr[1]));
-//                t_width = Float.parseFloat(arr[2]);
-//                if(arr[0].equals("TYPE_TEXT"))
-//                {
-//                    Items text = new ItemText(t_g2d, arr[3], t_color, Float.parseFloat(arr[2]),  Integer.parseInt(arr[4]), Integer.parseInt(arr[5]), Integer.parseInt(arr[6]), Integer.parseInt(arr[7]));
-//                    itemList.add(text);
-//                }
-//                else
-//                    createItem(arr[0], Integer.parseInt(arr[3]), Integer.parseInt(arr[4]), Integer.parseInt(arr[5]), Integer.parseInt(arr[6]));
-//            }
-//            bReader.close();
-//        }
-//        return true;
-//    }
-//    /**
-//     * Description	: save items into a file
-//     * @throws IOException
-//     */
-//    public void saveItems() throws IOException
-//    {
-//        if(itemList.size() == 0)
-//            JOptionPane.showMessageDialog(null, "Warning: the canva is empty", "ERROR", JOptionPane.ERROR_MESSAGE);
-//        else
-//        {
-//            FileDialog saveDia = new FileDialog(mainFrame, "Save", FileDialog.SAVE);;
-//            saveDia.setVisible(true);
-//            String dirPath = saveDia.getDirectory();
-//            String fileName = saveDia.getFile();
-//            if (dirPath == null || fileName == null)//判断路径和文件是否为空
-//                return;
-//            else
-//            {
-//                File file = new File(dirPath + fileName);
-//                FileWriter fWriter = new FileWriter(file, false);
-//                BufferedWriter bWriter = new BufferedWriter(fWriter);
-//                for(Items t: itemList)
-//                {
-//                    bWriter.write(t.getInfo());
-//                }
-//                bWriter.close();
-//                fWriter.close();
-//
-//            }
-//        }
-//    }
-//
-//}
+    public boolean Load() throws IOException {
+        FileDialog loadDialog = new FileDialog(frame, "Load from", FileDialog.LOAD);
+        loadDialog.setVisible(true);
+        String path = loadDialog.getDirectory();
+        String fname = loadDialog.getFile();
+        if(fname == null || path == null) {
+            return false;
+        }
+        else {
+            itemList.clear();   // clean current items
+            String str = null;
+            String fullPath = path + fname;
+            File file = new File(fullPath);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            while((str = br.readLine()) != null) {
+                String[] arr = str.split(",");
+                color = new Color(Integer.parseInt(arr[1]));
+                width = Float.parseFloat(arr[2]);
+                String textString = arr[3];
+                if(arr[0].equals("TEXT")) {
+                    Items newText = new Text(graphics, color, textString, width, Integer.parseInt(arr[4]), Integer.parseInt(arr[5]), Integer.parseInt(arr[6]), Integer.parseInt(arr[7]));
+                    itemList.add(newText);
+                }
+                else {
+                    newItem(Integer.parseInt(arr[3]), Integer.parseInt(arr[4]), Integer.parseInt(arr[5]), Integer.parseInt(arr[6]), arr[0]);
+                }
+            }
+            br.close();
+        }
+        return true;
+    }
+
+    public void SaveTo() throws IOException {
+        FileDialog saveDialog = new FileDialog(frame, "Save As", FileDialog.SAVE);
+        saveDialog.setVisible(true);
+        String path = saveDialog.getDirectory();
+        String fname = saveDialog.getFile();
+        if(path == null || fname == null) {
+            JOptionPane.showMessageDialog(null, "Warning: Please Set File Name and Path!", "Warning", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        else {
+            String fullPath = path + fname;
+            File file = new File(fullPath);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+            for(Items it : itemList) {
+                bw.write(it.ReadItem());
+            }
+            bw.close();
+        }
+    }
+}

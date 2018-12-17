@@ -59,7 +59,7 @@ class mMenu extends JMenuBar {
         item = new JMenu("Item");
         help = new JMenu("Help");
 
-        openFrom = new JMenuItem("Open From...");
+        openFrom = new JMenuItem("Load From...");
         openFrom.setActionCommand("OPEN");
         openFrom.addActionListener(mListener);
         file.add(openFrom);

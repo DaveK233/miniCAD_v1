@@ -52,6 +52,6 @@ public class Line extends Items {
 
     @Override
     public String ReadItem() {
-        return "LINE, " + color.getRGB() + ", " + stroke + ", " + (int)line.getX1() + ", " + (int)line.getY1() + ", " + (int)line.getX2() + ", " + (int)line.getY2() + "\n";
+        return "LINE," + color.getRGB() + "," + stroke + "," + (int)line.getX1() + "," + (int)line.getY1() + "," + (int)line.getX2() + "," + (int)line.getY2() + "\n";
     }
 }

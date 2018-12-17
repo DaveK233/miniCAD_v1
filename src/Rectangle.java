@@ -35,6 +35,6 @@ public class Rectangle extends Items {
 
     @Override
     public String ReadItem() {
-        return "RECTANGLE, " + color.getRGB() + ", " + stroke + ", " + (int)rectangle.getX() + ", " + (int)rectangle.getY() + ", " + (int)rectangle.getWidth() + ", " + (int)rectangle.getHeight() + "\n";
+        return "RECTANGLE," + color.getRGB() + "," + stroke + "," + (int)rectangle.getX() + "," + (int)rectangle.getY() + "," + (int)rectangle.getWidth() + "," + (int)rectangle.getHeight() + "\n";
     }
 }
