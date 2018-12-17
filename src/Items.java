@@ -52,7 +52,7 @@ public abstract class Items {
     }
 
     // define new size to repaint
-    public void NewSize(boolean input) {
+    public void Zoom(boolean input) {
         Point2D point1, point2;
         double tX = 0.1 * bound.getWidth();
         double tY = 0.1 * bound.getHeight();
