@@ -1,6 +1,8 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 
 public class mActionListener implements MouseListener, MouseMotionListener, ActionListener, KeyListener {
 
@@ -28,7 +30,63 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        Object obj = e.getSource();
+        if(e.getActionCommand().equals("OPEN")) {
+            try {
+                if(controller.Load()) {
+                    mainFrame.repaint();
+                }
+                else {
+                    action = Action.EMPTY;
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        else if(e.getActionCommand().equals("SAVE")) {
+            try {
+                controller.SaveTo();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        else if(e.getActionCommand().equals("ABOUT")) {
+            JOptionPane.showMessageDialog(null, "By Jin Dawei", "About", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getActionCommand().equals("HELP")) {
+            JOptionPane.showMessageDialog(null, "Help", "Help", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getActionCommand().equals("COLOR")) {
+            color = JColorChooser.showDialog((Component) obj, "Color", Color.BLACK);
+            if(item != null) {
+                item.SetColor(color);
+            }
+            else {
+                controller.SetColor(color);
+            }
+            action = Action.EMPTY;
+        }
+        else {
+            if(item != null) {
+                item.SetSelected();
+            }
+            if(e.getActionCommand().equals("LINE") || e.getActionCommand().equals("RECTANGLE") ||
+                    e.getActionCommand().equals("ELLIPSE") || e.getActionCommand().equals("TEXT")) {
+                opNew = e.getActionCommand();
+                action = Action.INITNEW;
+            }
+            else if(e.getActionCommand().equals("MOVE")) {
+                action = Action.INITMOV;
+            }
+            else if(e.getActionCommand().equals("ZOOM")) {
+                action = Action.ZOOM;
+            }
+            else if(e.getActionCommand().equals("SELECT")) {
+                action = Action.EMPTY;
+            }
+        }
+        mainFrame.repaint();
+        mainFrame.frameFocus();
     }
 
     @Override
@@ -38,7 +96,38 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        Component comp = e.getComponent();
+        if(e.getKeyCode() == KeyEvent.VK_UP) {
+            if(item.select) {
+                item.Zoom(true);    // zoom in
+            }
+            comp.repaint();
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+            if(item.select) {
+                item.Zoom(false);   // zoom out
+            }
+            comp.repaint();
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if(item.select) {
+                item.ChageStroke(true);
+            }
+            comp.repaint();
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if(item.select) {
+                item.ChageStroke(false);
+            }
+            comp.repaint();
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_D) {
+            if(item != null) {
+                controller.remove(item);
+            }
+            action = Action.EMPTY;
+            comp.repaint();
+        }
     }
 
     @Override
@@ -124,10 +213,33 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                     }
                 }
                 else if(action == Action.ZOOM) {
-                    item.Resize(newPos, clickPoint, -1);
-                    item = null;
-                    action = Action.INITZOOM;
+                    if (item != null) {
+                        item.Resize(newPos, clickPoint, -1);
+                        item = null;
+                        action = Action.INITZOOM;
+                    }
                 }
+                leftClicked = true;
+                comp.repaint();
+            }
+            // right click
+            else if(e.getButton() == MouseEvent.BUTTON3) {
+                if(action == Action.NEW) {
+                    controller.listPop();
+                    action = Action.INITNEW;
+                }
+                else if(action == Action.GETPOS || action == Action.EMPTY || action == Action.TOMOVE) {
+                    item.UnSelected();
+                    item = controller.Select2(clickPoint, leftClicked);
+                    if(item != null) {
+                        item.SetSelected();
+                    }
+                    leftClicked = false;
+                    comp.repaint();
+                }
+            }
+            else {
+                leftClicked = false;
             }
         }
     }
@@ -154,129 +266,21 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        Component comp = e.getComponent();
+        Point2D movedPoint = new Point2D.Double(e.getX(), e.getY());
+        if(comp instanceof mCanvas) {
+            if(action == Action.NEW) {
+                item.Resize(initPos, movedPoint, -1);
+                comp.repaint();
+            }
+            else if(action == Action.ZOOM) {
+                item.Resize(newPos, movedPoint, -1);
+                comp.repaint();
+            }
+            else if(action == Action.MOV) {
+                item.Move(movedPoint);
+                comp.repaint();
+            }
+        }
     }
 }
-
-//    public void mousePressed(MouseEvent e) {
-//        // TODO Auto-generated method stub
-//        Component source = e.getComponent();
-//        pressedPoint.setLocation(e.getX(), e.getY());
-//        System.out.println("pressed point:" + pressedPoint);
-//        if(source instanceof myCanvas)
-//        {
-//            //press left button
-//            if(e.getButton() == MouseEvent.BUTTON1)
-//            {
-//                if(currentItem != null)
-//                    currentItem.setNotChosed();
-//
-//                //no instruction, reselect current item
-//                if(currentAction == Action.EMPTY)
-//                {
-//                    currentItem = myItemController.chooseItem(pressedPoint);
-//                    if(currentItem != null)
-//                        currentItem.setChosed();
-//                }
-//                //the first step in creation, set the first point, repaint
-//                else if(currentAction == Action.CREATEINIT)
-//                {
-//                    if(createType.equals("TYPE_LINE"))
-//                        currentItem = myItemController.createItem(createType, pressedPoint.getX(), pressedPoint.getY(), pressedPoint.getX(), pressedPoint.getY());
-//                    else
-//                        currentItem = myItemController.createItem(createType, pressedPoint.getX(), pressedPoint.getY(), 0, 0);
-//
-//                    currentItem.setChosed();
-//                    createPoint = new Point2D.Double(pressedPoint.getX(),pressedPoint.getY());
-//                    currentAction = Action.CREATE;
-//                }
-//                //the second step of creation, end the creation, return to its first step
-//                else if(currentAction == Action.CREATE)
-//                {
-//                    currentItem.resize(createPoint, pressedPoint,false);
-//                    currentItem = null;
-//                    currentAction = Action.CREATEINIT;
-//                }
-//                //the first step of movement, choose item
-//                else if(currentAction == Action.MOVEINIT)
-//                {
-//                    currentItem = myItemController.chooseItem(pressedPoint);
-//                    if(currentItem != null)
-//                    {
-//                        currentItem.setChosed();
-//                        currentAction = Action.MOVECONFIM;
-//                    }
-//                }
-//                //the second step of movement, confirm item
-//                else if(currentAction == Action.MOVECONFIM)
-//                {
-//                    Items tmp = myItemController.chooseItem(pressedPoint);
-//                    if(tmp == currentItem)
-//                    {
-//                        currentItem.setChosed();
-//                        currentAction = Action.MOVE;
-//                    }
-//                    else
-//                    {
-//                        currentItem = null;
-//                        currentAction = Action.MOVEINIT;
-//                    }
-//                }
-//                //the third step of movement, end movement, return to its first step
-//                else if( currentAction == Action.MOVE)
-//                {
-//                    currentItem.move(pressedPoint);
-//                    currentItem = null;
-//                    currentAction = Action.MOVEINIT;
-//                }
-//                //the first step of scale, choose item
-//                else if(currentAction == Action.SCALEINIT)
-//                {
-//                    currentItem = myItemController.chooseItem(pressedPoint);
-//                    if(currentItem != null)
-//                    {
-//                        currentItem.setChosed();
-//                        currentAction = Action.GETPOSITION;
-//                    }
-//                }
-//                //the second step of scale, get the fixed corner
-//                else if(currentAction == Action.GETPOSITION)
-//                {
-//                    currentItem.setChosed();
-//                    resizePoint = currentItem.getOppositePoint(pressedPoint);
-//                    currentAction = Action.SCALE;
-//                }
-//                //the third setp of scale, end scale, return to its first step
-//                else if(currentAction == Action.SCALE)
-//                {
-//                    currentItem.resize(resizePoint, pressedPoint, false);
-//                    currentItem = null;
-//                    currentAction = Action.SCALEINIT;
-//                }
-//                pressedLeft = true;
-//                source.repaint();
-//            }
-//            else if(e.getButton() == MouseEvent.BUTTON3)
-//            {
-//                //cancel creation
-//                if(currentAction == Action.CREATE)
-//                {
-//                    myItemController.removeTopItem();
-//                    currentAction = Action.CREATEINIT;
-//                }
-//                //changing chosen item
-//                else if(currentAction == Action.EMPTY || currentAction == Action.MOVECONFIM || currentAction == Action.GETPOSITION)
-//                {
-//                    currentItem.setNotChosed();
-//                    currentItem = myItemController.rechooseItem(pressedPoint, pressedLeft);
-//                    if(currentItem != null)
-//                        currentItem.setChosed();
-//                }
-//                pressedLeft = false;
-//                source.repaint();
-//            }
-//            else {
-//                pressedLeft = false;
-//            }
-//        }
-//    }
