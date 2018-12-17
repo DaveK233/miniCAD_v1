@@ -169,7 +169,7 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                 else if(action == Action.NEW) {
                     // to update: assert or if
                     if (item != null) {
-                        item.Resize(newPos, clickPoint, -1);
+                        item.Resize(initPos, clickPoint, -1);
                         item = null;
                         action = Action.INITNEW;
                     }

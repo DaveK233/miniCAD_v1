@@ -72,7 +72,7 @@ class mMenu extends JMenuBar {
         drawLine = new JMenuItem("Draw Line");
         drawLine.setActionCommand("LINE");
         drawLine.addActionListener(mListener);
-        item.add(openFrom);
+        item.add(drawLine);
 
         drawRec = new JMenuItem("Draw Rectangle");
         drawRec.setActionCommand("RECTANGLE");
