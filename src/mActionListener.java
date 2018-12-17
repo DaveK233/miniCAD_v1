@@ -109,7 +109,25 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                         action = Action.INITMOV;
                     }
                 }
-
+                else if(action == Action.INITZOOM) {
+                    item = controller.Select(clickPoint);
+                    if(item != null) {
+                        item.SetSelected();
+                        action = Action.GETPOS;
+                    }
+                }
+                else if(action == Action.GETPOS) {
+                    if (item != null) {
+                        item.SetSelected();
+                        newPos = item.GetDiagonal(clickPoint);
+                        action = Action.ZOOM;
+                    }
+                }
+                else if(action == Action.ZOOM) {
+                    item.Resize(newPos, clickPoint, -1);
+                    item = null;
+                    action = Action.INITZOOM;
+                }
             }
         }
     }
