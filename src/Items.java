@@ -41,6 +41,14 @@ public abstract class Items {
         select = false;
     }
 
+    public Items(Graphics2D g2d, Color icolor, float width, int[] xPoints, int[] yPoints) {
+        graphics = g2d;
+        color = icolor;
+        pos = -1;
+        stroke = width;
+        select = false;
+    }
+
     // make the stroke thicker or thinner
     public void ChageStroke(boolean input) {
         if(input && stroke < 5.0f) {

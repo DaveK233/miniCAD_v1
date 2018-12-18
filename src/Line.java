@@ -14,7 +14,11 @@ public class Line extends Items {
 
     @Override
     public void drawItems() {
-        graphics.draw(line);    // draw line
+//        int[] xPoints = new int[] { 50, 100, 150, 200 };
+//        int[] yPoints = new int[] { 100, 120, 80, 100 };
+//        int nPoints = 4;
+//        graphics.drawPolyline(xPoints, yPoints, nPoints);    // draw line
+        graphics.draw(line);
     }
 
     @Override
