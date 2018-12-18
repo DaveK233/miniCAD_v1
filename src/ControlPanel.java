@@ -30,6 +30,14 @@ class ControlPanel {
                 Items newEllipse = new Ellipse(graphics, color, width, x1, y1, x2, y2);
                 itemList.add(newEllipse);
                 return newEllipse;
+            case "FILLREC":
+                Items newFillRec = new FillRec(graphics, color, width, x1, y1, x2, y2);
+                itemList.add(newFillRec);
+                return newFillRec;
+            case "FILLELI":
+                Items newFillEli = new FillEli(graphics, color, width, x1, y1, x2, y2);
+                itemList.add(newFillEli);
+                return newFillEli;
             case "TEXT":
                 Items newText = new Text(graphics, color, null, width, x1, y1, x2, y2);
                 itemList.add(newText);

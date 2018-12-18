@@ -133,8 +133,8 @@ class mMenu extends JMenuBar {
 }
 
 class mToolbar extends JToolBar {
-    private ImageIcon openIcon, saveIcon, lineIcon, rectangleIcon, ellipseIcon, textIcon, selectIcon, zoomIcon, moveIcon, colorIcon;
-    private JButton openBtn, saveBtn, lineBtn, rectangleBtn, ellipseBtn, textBtn, selectBtn, zoomBtn, moveBtn, colorBtn;
+    private ImageIcon openIcon, saveIcon, lineIcon, rectangleIcon, fillRecIcon, fillEliIcon, ellipseIcon, textIcon, selectIcon, zoomIcon, moveIcon, colorIcon;
+    private JButton openBtn, saveBtn, lineBtn, rectangleBtn, ellipseBtn, fillRecBtn, fillEliBtn, textBtn, selectBtn, zoomBtn, moveBtn, colorBtn;
     private mActionListener mListener;
     public mToolbar(mActionListener listener) {
         mListener = listener;
@@ -142,7 +142,9 @@ class mToolbar extends JToolBar {
         openIcon = new ImageIcon(new ImageIcon("icons/open.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
         lineIcon = new ImageIcon(new ImageIcon("icons/drawline.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
         rectangleIcon = new ImageIcon(new ImageIcon("icons/rectangle.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
-        ellipseIcon = new ImageIcon(new ImageIcon("icons/elipse.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
+        ellipseIcon = new ImageIcon(new ImageIcon("icons/ellipse.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
+        fillRecIcon = new ImageIcon(new ImageIcon("icons/fillrec.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
+        fillEliIcon = new ImageIcon(new ImageIcon("icons/filleli.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
         textIcon = new ImageIcon(new ImageIcon("icons/textfield.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
         selectIcon = new ImageIcon(new ImageIcon("icons/select.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
         zoomIcon = new ImageIcon(new ImageIcon("icons/zoom.png").getImage().getScaledInstance(32, 32, Image.SCALE_FAST));
@@ -173,6 +175,14 @@ class mToolbar extends JToolBar {
         ellipseBtn.setActionCommand("ELLIPSE");
         ellipseBtn.addActionListener(mListener);
 
+        fillRecBtn = new JButton(fillRecIcon);
+        fillRecBtn.setActionCommand("FILLREC");
+        fillRecBtn.addActionListener(mListener);
+
+        fillEliBtn = new JButton(fillEliIcon);
+        fillEliBtn.setActionCommand("FILLELI");
+        fillEliBtn.addActionListener(mListener);
+
         textBtn = new JButton(textIcon);
         textBtn.setActionCommand("TEXT");
         textBtn.addActionListener(mListener);
@@ -196,7 +206,9 @@ class mToolbar extends JToolBar {
         this.add(moveBtn);
         this.add(colorBtn);
         this.add(rectangleBtn);
+        this.add(fillRecBtn);
         this.add(ellipseBtn);
+        this.add(fillEliBtn);
         this.add(lineBtn);
         this.setAlignmentX(0);
     }

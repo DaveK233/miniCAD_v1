@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class mActionListener implements MouseListener, MouseMotionListener, ActionListener, KeyListener {
 
-    public enum Action{EMPTY, INITNEW, NEW, INITZOOM, ZOOM, GETPOS, INITMOV, TOMOVE, MOV}
+    public enum Action{EMPTY, INITPOLY, NEWPOLY, INITNEW, NEW, INITZOOM, ZOOM, GETPOS, INITMOV, TOMOVE, MOV}
     private ControlPanel controller;
     private MainFrame mainFrame;
     private Action action;
@@ -70,7 +70,7 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
             if(item != null) {
                 item.SetSelected();
             }
-            if(e.getActionCommand().equals("LINE") || e.getActionCommand().equals("RECTANGLE") ||
+            if(e.getActionCommand().equals("LINE") || e.getActionCommand().equals("RECTANGLE") || e.getActionCommand().equals("FILLREC") || e.getActionCommand().equals("FILLELI") ||
                     e.getActionCommand().equals("ELLIPSE") || e.getActionCommand().equals("TEXT")) {
                 opNew = e.getActionCommand();
                 action = Action.INITNEW;
@@ -158,16 +158,18 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                 else if(action == Action.INITNEW) {
                     if(opNew.equals("LINE")) {
                         item = controller.newItem(clickPoint.getX(), clickPoint.getY(), clickPoint.getX(), clickPoint.getY(), opNew);
+                        item.SetSelected();
+                        initPos = new Point2D.Double(clickPoint.getX(), clickPoint.getY());
+                        action = Action.NEW;
                     }
                     else {
                         item = controller.newItem(clickPoint.getX(), clickPoint.getY(), 0, 0, opNew);
+                        item.SetSelected();
+                        initPos = new Point2D.Double(clickPoint.getX(), clickPoint.getY());
+                        action = Action.NEW;
                     }
-                    item.SetSelected();
-                    initPos = new Point2D.Double(clickPoint.getX(), clickPoint.getY());
-                    action = Action.NEW;
                 }
                 else if(action == Action.NEW) {
-                    // to update: assert or if
                     if (item != null) {
                         item.Resize(initPos, clickPoint, -1);
                         item = null;
