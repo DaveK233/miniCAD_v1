@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 public class Polyline extends Items{
     Rectangle2D outRec;
+    int[] xPlist;
+    int[] yPlist;
+    int nPlist;
     public Polyline(Graphics2D g2d, Color icolor, float width, int[] xPoints, int[] yPoints) {
         super(g2d, icolor, width, xPoints, yPoints);
         List<Integer> xList = Arrays.stream(xPoints).boxed().collect(Collectors.toList());
@@ -16,6 +19,9 @@ public class Polyline extends Items{
         int maxX = Collections.max(xList);
         int minY = Collections.min(yList);
         int maxY = Collections.max(yList);
+        xPlist = xPoints;
+        yPlist = yPoints;
+        nPlist = xList.size();
         Point2D fromPoint = new Point2D.Double((float)minX, (float)minY);
         Point2D toPoint = new Point2D.Double((float)maxX, (float)maxY);
         float deltaX = (float)(maxX - minX);
@@ -26,8 +32,9 @@ public class Polyline extends Items{
 
     @Override
     public void drawItems() {
-//        graphics.drawPolyline();
+        graphics.drawPolyline(xPlist, yPlist, nPlist);
     }
+
 
     @Override
     public void Resize(Point2D point1, Point2D point2, int centre) {
