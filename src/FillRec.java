@@ -22,6 +22,14 @@ public class FillRec extends Rectangle{
 
     @Override
     public void Move(Point2D point) {
+        double deltaX = point.getX() - bound.getCenterX();
+        double deltaY = point.getY() - bound.getCenterY();
+        double newX = rectangle.getX() + deltaX;
+        double newY = rectangle.getY() + deltaY;
+        double newWidth = rectangle.getWidth();
+        double newHeight = rectangle.getHeight();
+        rectangle.setFrame(newX, newY, newWidth, newHeight);
+        bound = rectangle.getBounds2D();
     }
 
 
