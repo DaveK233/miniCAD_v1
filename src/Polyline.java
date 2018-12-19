@@ -1,6 +1,8 @@
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class Polyline extends Items{
     Rectangle2D outRec;
+//    ArrayList<Line2D> polylines = new ArrayList<>();
     private int[] xPlist;
     private int[] yPlist;
     private int nPlist;
@@ -39,6 +42,21 @@ public class Polyline extends Items{
 
     @Override
     public void Resize(Point2D point1, Point2D point2, int centre) {
+//        double deltaWidth = Math.abs(point2.getX() - point1.getX());
+//        double deltaHeight = Math.abs(point2.getY() - point1.getY());
+//        for(int i = 0; i < nPlist; i++) {
+//            Point2D tempPoint = new Point2D.Double(xPlist[i], yPlist[i]);
+//            pos = PressPos(tempPoint);
+//            if(pos == L_UPPER) {
+//
+//            }
+//            else if(pos == L_LOWER) {
+//            }
+//            else if(pos == R_UPPER) {
+//            }
+//            else if(pos == R_LOWER) {
+//            }
+//        }
 
     }
 

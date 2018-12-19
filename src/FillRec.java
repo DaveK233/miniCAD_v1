@@ -12,6 +12,10 @@ public class FillRec extends Rectangle{
     @Override
     public void drawItems() {
         graphics.fill(rectangle);
+//        int[] xPoints = new int[] { 140, 180, 220};
+//        int[] yPoints = new int[] { 150,  250, 200};
+//        int nPoints = 3;
+//        graphics.drawPolygon(xPoints, yPoints, nPoints);
     }
 
     @Override
