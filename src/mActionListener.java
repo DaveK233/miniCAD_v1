@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class mActionListener implements MouseListener, MouseMotionListener, ActionListener, KeyListener {
 
@@ -15,9 +16,11 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
     private static Point2D clickPoint = new Point2D.Double();
     private Point2D initPos;
     private Point2D newPos;
+    private Point2D tempClickPoint;
     private boolean leftClicked;
-    private boolean rightClicked;
+    private int nlist;
     private Color color;
+    private ArrayList<Point2D> pointList = new ArrayList<>();
 
     public mActionListener(ControlPanel cont) {
         controller = cont;
@@ -74,6 +77,10 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                     e.getActionCommand().equals("ELLIPSE") || e.getActionCommand().equals("TEXT")) {
                 opNew = e.getActionCommand();
                 action = Action.INITNEW;
+            }
+            else if(e.getActionCommand().equals("POLYLINE")) {
+                opNew = e.getActionCommand();
+                action = Action.INITPOLY;
             }
             else if(e.getActionCommand().equals("MOVE")) {
                 action = Action.INITMOV;
@@ -155,6 +162,13 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                         item.SetSelected();
                     }
                 }
+                else if(action == Action.INITPOLY || action == Action.NEWPOLY) {
+                    if(opNew.equals("POLYLINE")) {
+                        tempClickPoint = new Point2D.Double(clickPoint.getX(), clickPoint.getY());
+                        pointList.add(tempClickPoint);
+                    }
+                    action = Action.NEWPOLY;
+                }
                 else if(action == Action.INITNEW) {
                     if(opNew.equals("LINE")) {
                         item = controller.newItem(clickPoint.getX(), clickPoint.getY(), clickPoint.getX(), clickPoint.getY(), opNew);
@@ -217,9 +231,9 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                 else if(action == Action.ZOOM) {
                     if (item != null) {
                         item.Resize(newPos, clickPoint, -1);
-                        item = null;
-                        action = Action.INITZOOM;
                     }
+                    item = null;
+                    action = Action.INITZOOM;
                 }
                 leftClicked = true;
                 comp.repaint();
@@ -229,6 +243,20 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                 if(action == Action.NEW) {
                     controller.listPop();
                     action = Action.INITNEW;
+                }
+                else if(action == Action.NEWPOLY) {
+                    tempClickPoint = new Point2D.Double(clickPoint.getX(), clickPoint.getY());
+                    pointList.add(tempClickPoint);
+                    nlist = pointList.size();
+                    int[] xList = new int[nlist];
+                    int[] yList = new int[nlist];
+                    for(int i = 0; i < nlist; i++) {
+                        xList[i] = (int) pointList.get(i).getX();
+                        yList[i] = (int) pointList.get(i).getY();
+                    }
+                    item = controller.newItem(xList, yList, opNew);
+                    item.SetSelected();
+                    action = Action.INITPOLY;
                 }
                 else if(action == Action.GETPOS || action == Action.EMPTY || action == Action.TOMOVE) {
                     item.UnSelected();

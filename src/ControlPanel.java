@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 class ControlPanel {
@@ -42,6 +43,16 @@ class ControlPanel {
                 Items newText = new Text(graphics, color, null, width, x1, y1, x2, y2);
                 itemList.add(newText);
                 return newText;
+        }
+        return null;
+    }
+
+    public Items newItem(int[] XArray, int[] YArray, String op) {
+        switch(op) {
+            case "POLYLINE":
+                Items newPolyline = new Polyline(graphics, color, width, XArray, YArray);
+                itemList.add(newPolyline);
+                return newPolyline;
         }
         return null;
     }
@@ -124,6 +135,25 @@ class ControlPanel {
                 if(arr[0].equals("TEXT")) {
                     Items newText = new Text(graphics, color, textString, width, Integer.parseInt(arr[4]), Integer.parseInt(arr[5]), Integer.parseInt(arr[6]), Integer.parseInt(arr[7]));
                     itemList.add(newText);
+                }
+                else if(arr[0].equals("POLYLINE")) {
+                    int pointNum = Integer.parseInt(arr[3]);
+                    ArrayList<Integer> tempXList = new ArrayList<>();
+                    ArrayList<Integer> tempYList = new ArrayList<>();
+                    for(int i = 4; i < (4+pointNum); i++) {
+                        tempXList.add(Integer.valueOf(arr[i]));
+                    }
+                    for(int i = (4 + pointNum); i < (4 + (2 * pointNum)); i++) {
+                        tempYList.add(Integer.valueOf(arr[i]));
+                    }
+                    int[] tempXArray = new int[tempXList.size()];
+                    int[] tempYArray = new int[tempYList.size()];
+                    for(int i = 0; i < pointNum; i++) {
+                        tempXArray[i] = tempXList.get(i);
+                        tempYArray[i] = tempYList.get(i);
+                    }
+                    Items newPolyline = new Polyline(graphics, color, width, tempXArray, tempYArray);
+                    itemList.add(newPolyline);
                 }
                 else {
                     newItem(Integer.parseInt(arr[3]), Integer.parseInt(arr[4]), Integer.parseInt(arr[5]), Integer.parseInt(arr[6]), arr[0]);

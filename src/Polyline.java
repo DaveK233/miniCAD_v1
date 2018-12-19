@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -44,20 +45,48 @@ public class Polyline extends Items{
     public void Resize(Point2D point1, Point2D point2, int centre) {
 //        double deltaWidth = Math.abs(point2.getX() - point1.getX());
 //        double deltaHeight = Math.abs(point2.getY() - point1.getY());
-//        for(int i = 0; i < nPlist; i++) {
-//            Point2D tempPoint = new Point2D.Double(xPlist[i], yPlist[i]);
-//            pos = PressPos(tempPoint);
-//            if(pos == L_UPPER) {
-//
-//            }
-//            else if(pos == L_LOWER) {
-//            }
-//            else if(pos == R_UPPER) {
-//            }
-//            else if(pos == R_LOWER) {
-//            }
-//        }
+        double newWidth = Math.abs(point2.getX() - point1.getX());
+        double newHeight = Math.abs(point2.getY() - point1.getY());
+        double zoomScaleX = newWidth / (bound.getWidth());
+        double zoomScaleY = newHeight / (bound.getHeight());
+        for(int i = 0; i < nPlist; i++) {
+            Point2D tempPoint = new Point2D.Double((double)xPlist[i], (double)yPlist[i]);
+            pos = PressPos(tempPoint);
+            double oldDeltaX = Math.abs(bound.getCenterX() - xPlist[i]);
+            double oldDeltaY = Math.abs(bound.getCenterY() - yPlist[i]);
+            double newDeltaX = oldDeltaX * zoomScaleX;
+            double newDeltaY = oldDeltaY * zoomScaleY;
+            if(pos == L_UPPER) {
+                xPlist[i] = (int) (bound.getCenterX() - newDeltaX);
+                yPlist[i] = (int) (bound.getCenterY() - newDeltaY);
+            }
+            else if(pos == L_LOWER) {
 
+                xPlist[i] = (int) (bound.getCenterX() - newDeltaX);
+                yPlist[i] = (int) (bound.getCenterY() + newDeltaY);
+            }
+            else if(pos == R_UPPER) {
+                xPlist[i] = (int) (bound.getCenterX() + newDeltaX);
+                yPlist[i] = (int) (bound.getCenterY() - newDeltaY);
+            }
+            else if(pos == R_LOWER) {
+                xPlist[i] = (int) (bound.getCenterX() + newDeltaX);
+                yPlist[i] = (int) (bound.getCenterY() + newDeltaY);
+            }
+        }
+//        AffineTransform aTransform = new AffineTransform();
+////        graphics.setTransform(aTransform);
+//        double newWidth = Math.abs(point2.getX() - point1.getX());
+//        double newHeight = Math.abs(point2.getY() - point1.getY());
+//        double zoomScaleX = newWidth / (bound.getWidth());
+//        double zoomScaleY = newHeight / (bound.getHeight());
+//        aTransform.setToTranslation(100,100);
+//        aTransform.scale(10, 10);
+//        graphics.setTransform(aTransform);
+//        graphics.draw();
+////        graphics.scale(10, 10);
+        outRec.setFrameFromDiagonal(point1, point2);
+        bound = outRec.getBounds2D();
     }
 
     @Override
@@ -82,6 +111,14 @@ public class Polyline extends Items{
 
     @Override
     public String ReadItem() {
-        return null;
+        StringBuilder info = new StringBuilder("POLYLINE," + color.getRGB() + "," + stroke + "," + nPlist);
+        for(int i = 0; i < nPlist; i++) {
+            info.append(",").append(xPlist[i]);
+        }
+        for(int i = 0; i < nPlist; i++) {
+            info.append(",").append(yPlist[i]);
+        }
+        info.append("\n");
+        return info.toString();
     }
 }

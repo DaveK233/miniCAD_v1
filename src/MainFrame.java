@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
 class mMenu extends JMenuBar {
     private JMenu file, item, help;
     private JMenuItem openFrom, saveAs; // file menu options
-    private JMenuItem drawLine, drawRec, fillRec, fillEli, drawEli, addText, zoomItem, moveItem, color;   // Item menu options
+    private JMenuItem drawPolyline, drawLine, drawRec, fillRec, fillEli, drawEli, addText, zoomItem, moveItem, color;   // Item menu options
     private JMenuItem about, itemHelp;  // Help menu options
     private mActionListener mListener;
     public mMenu(mActionListener listener) {
@@ -93,6 +93,11 @@ class mMenu extends JMenuBar {
         fillEli.setActionCommand("FILLELI");
         fillEli.addActionListener(mListener);
         item.add(fillEli);
+
+        drawPolyline = new JMenuItem("Draw Polyline");
+        drawPolyline.setActionCommand("POLYLINE");
+        drawPolyline.addActionListener(mListener);
+        item.add(drawPolyline);
 
         addText = new JMenuItem("Add Text");
         addText.setActionCommand("TEXT");
