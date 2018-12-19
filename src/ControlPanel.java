@@ -18,41 +18,43 @@ class ControlPanel {
     }
 
     public Items newItem(double x1, double y1, double x2, double y2, String op) {
-        switch (op) {
-            case "LINE":
-                Items newLine = new Line(graphics, color, width, x1, y1, x2, y2);
-                itemList.add(newLine);
-                return newLine;
-            case "RECTANGLE":
-                Items newRectangle = new Rectangle(graphics, color, width, x1, y1, x2, y2);
-                itemList.add(newRectangle);
-                return newRectangle;
-            case "ELLIPSE":
-                Items newEllipse = new Ellipse(graphics, color, width, x1, y1, x2, y2);
-                itemList.add(newEllipse);
-                return newEllipse;
-            case "FILLREC":
-                Items newFillRec = new FillRec(graphics, color, width, x1, y1, x2, y2);
-                itemList.add(newFillRec);
-                return newFillRec;
-            case "FILLELI":
-                Items newFillEli = new FillEli(graphics, color, width, x1, y1, x2, y2);
-                itemList.add(newFillEli);
-                return newFillEli;
-            case "TEXT":
-                Items newText = new Text(graphics, color, null, width, x1, y1, x2, y2);
-                itemList.add(newText);
-                return newText;
+        if ("LINE".equals(op)) {
+            Items newLine = new Line(graphics, color, width, x1, y1, x2, y2);
+            itemList.add(newLine);
+            return newLine;
+        } else if ("RECTANGLE".equals(op)) {
+            Items newRectangle = new Rectangle(graphics, color, width, x1, y1, x2, y2);
+            itemList.add(newRectangle);
+            return newRectangle;
+        } else if ("ELLIPSE".equals(op)) {
+            Items newEllipse = new Ellipse(graphics, color, width, x1, y1, x2, y2);
+            itemList.add(newEllipse);
+            return newEllipse;
+        } else if ("FILLREC".equals(op)) {
+            Items newFillRec = new FillRec(graphics, color, width, x1, y1, x2, y2);
+            itemList.add(newFillRec);
+            return newFillRec;
+        } else if ("FILLELI".equals(op)) {
+            Items newFillEli = new FillEli(graphics, color, width, x1, y1, x2, y2);
+            itemList.add(newFillEli);
+            return newFillEli;
+        } else if ("TEXT".equals(op)) {
+            Items newText = new Text(graphics, color, null, width, x1, y1, x2, y2);
+            itemList.add(newText);
+            return newText;
         }
         return null;
     }
 
     public Items newItem(int[] XArray, int[] YArray, String op) {
-        switch(op) {
-            case "POLYLINE":
-                Items newPolyline = new Polyline(graphics, color, width, XArray, YArray);
-                itemList.add(newPolyline);
-                return newPolyline;
+        if ("POLYLINE".equals(op)) {
+            Items newPolyline = new Polyline(graphics, color, width, XArray, YArray);
+            itemList.add(newPolyline);
+            return newPolyline;
+        } else if ("POLYGON".equals(op)) {
+            Items newPolygon = new Polygon(graphics, color, width, XArray, YArray);
+            itemList.add(newPolygon);
+            return newPolygon;
         }
         return null;
     }

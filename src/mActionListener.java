@@ -78,7 +78,7 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                 opNew = e.getActionCommand();
                 action = Action.INITNEW;
             }
-            else if(e.getActionCommand().equals("POLYLINE")) {
+            else if(e.getActionCommand().equals("POLYLINE") || e.getActionCommand().equals("POLYGON")) {
                 opNew = e.getActionCommand();
                 action = Action.INITPOLY;
             }
@@ -163,7 +163,7 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                     }
                 }
                 else if(action == Action.INITPOLY || action == Action.NEWPOLY) {
-                    if(opNew.equals("POLYLINE")) {
+                    if(opNew.equals("POLYLINE") || opNew.equals("POLYGON")) {
                         tempClickPoint = new Point2D.Double(clickPoint.getX(), clickPoint.getY());
                         pointList.add(tempClickPoint);
                     }
@@ -256,6 +256,8 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                     }
                     item = controller.newItem(xList, yList, opNew);
                     item.SetSelected();
+                    comp.repaint();
+                    pointList = new ArrayList<>();
                     action = Action.INITPOLY;
                 }
                 else if(action == Action.GETPOS || action == Action.EMPTY || action == Action.TOMOVE) {
