@@ -245,8 +245,8 @@ public class mActionListener implements MouseListener, MouseMotionListener, Acti
                     action = Action.INITNEW;
                 }
                 else if(action == Action.NEWPOLY) {
-                    tempClickPoint = new Point2D.Double(clickPoint.getX(), clickPoint.getY());
-                    pointList.add(tempClickPoint);
+//                    tempClickPoint = new Point2D.Double(clickPoint.getX(), clickPoint.getY());
+//                    pointList.add(tempClickPoint);
                     nlist = pointList.size();
                     int[] xList = new int[nlist];
                     int[] yList = new int[nlist];
